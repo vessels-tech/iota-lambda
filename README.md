@@ -5,6 +5,7 @@
 ## Purpose
 
 This is an example project of using AWS lambda to perform the `attachToTangle` command without having to run it locally *or* run a full node.
+Using AWS Lambda (or any FaaS) can allow for infinite scaling without having to manage underlying servers. Using this method, you could run a fleet of IOTA devices, pointing to a public full node that doesn't support `attachToTangle`, and handle the POW yourself! Magic!
 
 ## Getting Started
 
@@ -59,10 +60,17 @@ Sorry, but this one needs a few disparate bits and pieces to get it working:
   $ node index.js
   ```
 
+### Use
 
+Feel free to use this, or let it inspire you to build something else.
+PRs welcome :)
 
+Let me know if you want to build something together. Feel free to message me at my github email.
 
-
+Tips are welcome 🙌🙌🙌
+```
+ETQINORRZDFPMTXUIXHTWFWZXGLNZM9O9CSYXITH9KLTKRHZIQ9WZFBPSFOQRYQCB9USIMAOBVZNMIH99C9AHFZNQZ
+```
 
 
 ## Handy Snippets
