@@ -49,7 +49,11 @@ Sorry, but this one needs a few disparate bits and pieces to get it working:
 
   ```bash
   #make sure you log out of docker or use a different window first!
+  #for some reason you need python 2.7 for this to work - I use pyenv for this
   $ yarn #or npm install I suppose
+
+  # make sure your AWS_PROFILE is set - if it's set to default, you can skip this step
+  $ source _env.sh
 
   #run my test script.
   $ node index.js

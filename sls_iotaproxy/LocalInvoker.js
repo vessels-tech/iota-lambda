@@ -1,5 +1,5 @@
 /*
-  LocalInvoker overrides the attachToTangle function in the js sdk,
+  LocalInvoker overrides the attachToTangle function in the iota.js sdk,
   and forwards it to AWS lambda for processing.
 */
 class LocalInvoker {
@@ -16,7 +16,7 @@ class LocalInvoker {
    * must match the signature in iota.api.js
    */
   attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
-    console.log("ATTACHING TO TANGLE YAY!");
+    console.log("running attachToTangle on AWS lambda");
 
     const params = {
       FunctionName: this.functionName,

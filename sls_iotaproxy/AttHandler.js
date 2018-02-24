@@ -16,8 +16,6 @@ module.exports.handler = (event, context, callback) => {
     return callback(new Error("Error with ccurl provider"));
   }
 
-  //TODO parse event?
-
   return performAttachToTangle(ccurlProvider, event)
     .then(data => callback(null, {statusCode:200, body:data}))
     .catch(err => callback(err, {statusCode:500, body:JSON.stringify({message:err})}))
