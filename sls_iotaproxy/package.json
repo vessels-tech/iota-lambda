@@ -1,0 +1,23 @@
+{
+  "name": "iotaproxy",
+  "version": "1.0.0",
+  "description": "Simple IOTA Proxy server with attachToTangle/PoW support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Tim Samshuijzen"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "ffi": "^2.2.0",
+    "koa": "^2.5.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
+    "serverless-http": "^1.5.3"
+  }
+}

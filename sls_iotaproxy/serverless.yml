@@ -1,0 +1,29 @@
+service: IotaProxy
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: ap-southeast-2
+
+functions:
+  attHandler:
+    handler: AttHandler.handler
+    #5 mins, hopefully enough for PoW
+    timeout: 300
+
+  # Not required - the ApiGateway lambda handler didn't work :(
+  # proxy:
+  #   handler: proxy.handler
+  #   #this is a hard limit imposed by ApiGateway - no getting around this :(
+  #   timeout: 30
+    # events:
+    #   - http:
+    #       path: /
+    #       method: ANY
+    #   - http:
+    #       path: /{any+}
+    #       method: ANY
+    # environment:
+    #   HOST: http://5.9.149.169
+    #   PORT: 14265
+    #   LOCAL_PORT: 14265

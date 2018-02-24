@@ -1,0 +1,17 @@
+version: '2'
+services:
+  iota_lambda:
+    build: .
+    container_name: iota_lambda
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+      - "~/.aws:/root/.aws"
+    environment:
+      #set this yourself, or in a _env.sh file
+      - AWS_PROFILE
+      #these variables are not required - this was needed for the ApiGateway Version.
+      - HOST=http://5.9.149.169
+      - PORT=14265
+      - LOCAL_PORT=3000
