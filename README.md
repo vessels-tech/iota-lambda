@@ -31,9 +31,6 @@ Sorry, but this one needs a few disparate bits and pieces to get it working:
 
   #run the container
   $ ./_enter_docker.sh
-
-  #inside the container, ensure your AWS credentials are working as expected
-  $ ./aws s3 ls #this command shouldn't die
   ```
 
 2. deploy the lambda function. You may want to change the region in `sls_iotaproxy/serverless.yml`
