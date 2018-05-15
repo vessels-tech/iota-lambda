@@ -1,6 +1,6 @@
 {
   "name": "iota-lambda-shim",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple shim that offloads IOTA PoW to AWS Lambda Functions",
   "main": "lib/index.js",
   "scripts": {

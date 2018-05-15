@@ -18,8 +18,7 @@ const lambda = new AWS.Lambda({
   region: 'ap-southeast-2' //I come from a land down under
 });
 
-// const IotaLambdaShim = require('iota-lambda-shim');
-const IotaLambdaShim = require('../lib/index');
+const IotaLambdaShim = require('iota-lambda-shim');
 
 // Patch the current IOTA instance
 IotaLambdaShim({ iota, lambda, functionName });
