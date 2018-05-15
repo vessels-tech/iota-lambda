@@ -1,0 +1,10 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "iota-lambda-shim": "^0.0.2",
+    "iota.lib.js": "^0.4.7"
+  }
+}

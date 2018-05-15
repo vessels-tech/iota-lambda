@@ -1,15 +1,32 @@
+/*iota library */
 const IOTA = require('iota.lib.js');
+const { 
+  provider, 
+  functionName,
+  trytes //todo: remove
+} = require('./config');
 
-const { provider, trytes } = require('./config');
-
+//Please don't ever use this seed for anything
 const seed = "UFLKWXVHYTPDBAOJS9CQMGNRZEI";
 const iota = new IOTA({
   provider,
 });
 
-//Sadly this won't work with the lambda proxy. 30s is just too short to complete POW :(
-//We could make a new method that invokes the lambda for JUST the PoW (which is better anyway)
-//That way we wouldn't need to use ApiGateway, or proxy any requests.
+/* set up AWS config to refer to our lambda */
+const AWS = require('aws-sdk');
+const lambda = new AWS.Lambda({
+  region: 'ap-southeast-2' //I come from a land down under
+});
+
+// const IotaLambdaShim = require('iota-lambda-shim');
+const IotaLambdaShim = require('../lib/index');
+
+// Patch the current IOTA instance
+IotaLambdaShim({ iota, lambda, functionName });
+
+
+
+//Do whatever you want with the IOTA js api now.
 iota.api.getNewAddress(seed, {}, (error, address) => {
     console.log("ADDRESS:", address)
     if (error) throw error;

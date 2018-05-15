@@ -1,6 +1,5 @@
 # IOTA Lambda
-
-### offload your POW to AWS lambda!
+## offload your POW to AWS lambda!
 
 ## Purpose
 
@@ -22,7 +21,8 @@ Sorry, but this one needs a few disparate bits and pieces to get it working:
 - *node* and *yarn*
 
 
-### Steps
+### Deployment
+
 
 1. build the containers and login to the docker container
 
@@ -42,25 +42,57 @@ Sorry, but this one needs a few disparate bits and pieces to get it working:
 
   Wait for serverless to deploy, make a cup of tea maybe. It's a known fact that deployments take longer if you sit there watching them.
 
-3. Edit `config.js` to set your provider and trytes to send.
+### Installation
+ 
+Once you have successfully deployed your function, you can use it to perform your PoW.
 
-  I'm setting the trytes manually here because I'm lazy, and was getting errors when trying to generate them using the iota api.
+Install the `iota-lambda-shim` package:
 
-4. Get the test script up and running.
+```bash
+yarn add iota-lambda-shim
+```
 
-  ```bash
-  #make sure you log out of docker or use a different window first!
-  #for some reason you need python 2.7 for this to work - I use pyenv for this
-  $ yarn #or npm install I suppose
+Make a note of your `provider` (this can be a public full node that doesn't support AttachToTangle) the `functionName`. Put them in a config file like so:
 
-  # make sure your AWS_PROFILE is set - if it's set to default, you can skip this step
-  $ source _env.sh
+`config.js`
+```js
+module.exports = {
+  provider: 'http://5.9.149.169:14265',
+  functionName: 'IotaProxy-dev-attHandler',
+}
 
-  #run my test script.
-  $ node index.js
-  ```
+```
 
-### Use
+### Basic Usage:
+
+```js
+/*iota library */
+const IOTA = require('iota.lib.js');
+const { provider, functionName } = require('./config');
+
+//Please don't ever use this seed for anything
+const seed = "UFLKWXVHYTPDBAOJS9CQMGNRZEI";
+const iota = new IOTA({
+  provider,
+});
+
+/* set up AWS config to refer to our lambda */
+const AWS = require('aws-sdk');
+const lambda = new AWS.Lambda({
+  region: 'ap-southeast-2' //I come from a land down under
+});
+
+const IotaLambdaShim = require('iota-lambda-shim');
+
+// Patch the current IOTA instance
+IotaLambdaShim({iota, lambda, functionName});
+
+//Now do whatever you want with the IOTA js api.
+```
+
+
+
+
 
 Feel free to use this, or let it inspire you to build something else.
 PRs welcome :)

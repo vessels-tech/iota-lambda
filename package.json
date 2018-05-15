@@ -1,17 +1,20 @@
 {
-  "name": "iota_lambda",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "iota-lambda-shim",
+  "version": "0.0.2",
+  "description": "A simple shim that offloads IOTA PoW to AWS Lambda Functions",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Lewis Daly <lewis@vesselstech.com> (https://vesselstech.com)",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/iota-foundation/software/powbox/curl-remote.git"
+  },
   "dependencies": {
     "aws-sdk": "^2.202.0",
     "ccurl.interface.js": "^0.0.8",
-    "curl.lib.js": "^1.0.22",
-    "iota.lib.js": "^0.4.7"
+    "curl.lib.js": "^1.0.22"
   }
 }
