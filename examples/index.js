@@ -32,12 +32,12 @@ iota.api.getNewAddress(seed, {}, (error, address) => {
     if (error) throw error;
     let transfers = [{
         'address': address,
-        // 'message': iota.utils.toTrytes("testing"),
-        'message': trytes,
+        'message': iota.utils.toTrytes("testing"),
+        // 'message': trytes,
         'value': 0,
         'tag': 'SURJIKAL'
     }];
-    
+
     iota.api.sendTransfer(seed, 5, 14, transfers, (error, results) => {
         if (error) throw error;
         console.log("RESULTS:", results)
