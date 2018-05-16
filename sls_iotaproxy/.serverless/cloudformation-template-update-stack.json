@@ -11,12 +11,6 @@
         "LogGroupName": "/aws/lambda/IotaProxy-dev-attHandler"
       }
     },
-    "ProxyLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/IotaProxy-dev-proxy"
-      }
-    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -58,10 +52,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-attHandler:*"
-                    },
-                    {
-                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-proxy:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-attHandler:*"
                     }
                   ]
                 },
@@ -72,10 +63,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-attHandler:*:*"
-                    },
-                    {
-                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-proxy:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/IotaProxy-dev-attHandler:*:*"
                     }
                   ]
                 }
@@ -104,7 +92,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/IotaProxy/dev/1519464795467-2018-02-24T09:33:15.467Z/IotaProxy.zip"
+          "S3Key": "serverless/IotaProxy/dev/1526448954820-2018-05-16T05:35:54.820Z/IotaProxy.zip"
         },
         "FunctionName": "IotaProxy-dev-attHandler",
         "Handler": "AttHandler.handler",
@@ -123,210 +111,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "AttHandlerLambdaVersionf2wdDztgRYe0LOkpeb4z4IteDrcCBtD0XFdaCAA": {
+    "AttHandlerLambdaVersionYEMAVAp6e9zYapEmk9Rrj0U7PyX4zmmdi1y7902A": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AttHandlerLambdaFunction"
         },
-        "CodeSha256": "jI6TA1NeoFNKue7IK1Gdl34h3559Pi9CMzHSSR/3hfo="
-      }
-    },
-    "ProxyLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/IotaProxy/dev/1519464795467-2018-02-24T09:33:15.467Z/IotaProxy.zip"
-        },
-        "FunctionName": "IotaProxy-dev-proxy",
-        "Handler": "proxy.handler",
-        "MemorySize": 1024,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        },
-        "Runtime": "nodejs6.10",
-        "Timeout": 30,
-        "Environment": {
-          "Variables": {
-            "HOST": "http://5.9.149.169",
-            "PORT": 14265,
-            "LOCAL_PORT": 14265
-          }
-        }
-      },
-      "DependsOn": [
-        "ProxyLogGroup",
-        "IamRoleLambdaExecution"
-      ]
-    },
-    "ProxyLambdaVersionCzPTUICyBjI1rO8XVy4Z2ycLijfXw1I79qdKN9T4": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "ProxyLambdaFunction"
-        },
-        "CodeSha256": "jI6TA1NeoFNKue7IK1Gdl34h3559Pi9CMzHSSR/3hfo="
-      }
-    },
-    "ApiGatewayRestApi": {
-      "Type": "AWS::ApiGateway::RestApi",
-      "Properties": {
-        "Name": "dev-IotaProxy",
-        "EndpointConfiguration": {
-          "Types": [
-            "EDGE"
-          ]
-        }
-      }
-    },
-    "ApiGatewayResourceAnyVar": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "{any+}",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayMethodAny": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "ANY",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:aws:apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "ProxyLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayMethodAnyVarAny": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "ANY",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceAnyVar"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:aws:apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "ProxyLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayDeployment1519464795585": {
-      "Type": "AWS::ApiGateway::Deployment",
-      "Properties": {
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "StageName": "dev"
-      },
-      "DependsOn": [
-        "ApiGatewayMethodAny",
-        "ApiGatewayMethodAnyVarAny"
-      ]
-    },
-    "ProxyLambdaPermissionApiGateway": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "ProxyLambdaFunction",
-            "Arn"
-          ]
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:aws:execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "/*/*"
-            ]
-          ]
-        }
+        "CodeSha256": "xoQL/PL6eSXHCLcstoN1quxBSGuvfM2X3iQ2Bn71xko="
       }
     }
   },
@@ -339,28 +131,7 @@
     "AttHandlerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AttHandlerLambdaVersionf2wdDztgRYe0LOkpeb4z4IteDrcCBtD0XFdaCAA"
-      }
-    },
-    "ProxyLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "ProxyLambdaVersionCzPTUICyBjI1rO8XVy4Z2ycLijfXw1I79qdKN9T4"
-      }
-    },
-    "ServiceEndpoint": {
-      "Description": "URL of the service endpoint",
-      "Value": {
-        "Fn::Join": [
-          "",
-          [
-            "https://",
-            {
-              "Ref": "ApiGatewayRestApi"
-            },
-            ".execute-api.ap-southeast-2.amazonaws.com/dev"
-          ]
-        ]
+        "Ref": "AttHandlerLambdaVersionYEMAVAp6e9zYapEmk9Rrj0U7PyX4zmmdi1y7902A"
       }
     }
   }

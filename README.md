@@ -70,8 +70,6 @@ module.exports = {
 const IOTA = require('iota.lib.js');
 const { provider, functionName } = require('./config');
 
-//Please don't ever use this seed for anything
-const seed = "UFLKWXVHYTPDBAOJS9CQMGNRZEI";
 const iota = new IOTA({
   provider,
 });

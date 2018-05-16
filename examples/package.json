@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.240.1",
     "iota-lambda-shim": "^0.0.3",
     "iota.lib.js": "^0.4.7"
   }
