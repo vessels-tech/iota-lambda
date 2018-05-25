@@ -1,12 +1,7 @@
 const request = require('request-promise-native');
 
-
-
-
 const host = process.env.HOST;
 const port = process.env.PORT;
-
-
 
 /**
  * Perform the attachToTangle command locally

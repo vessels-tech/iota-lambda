@@ -33,7 +33,10 @@ module.exports = class ServerlessRequest extends http.IncomingMessage {
     super({
       encrypted: true,
       readable: false,
-      remoteAddress: event.requestContext.identity.sourceIp
+      remoteAddress: event.requestContext.identity.sourceIp,
+      address: () => {
+        return { port: 443 };
+      }
     });
 
     const headers = getHeaders(event);
@@ -47,6 +50,8 @@ module.exports = class ServerlessRequest extends http.IncomingMessage {
       const requestId = options.requestId.toLowerCase();
       headers[requestId] = headers[requestId] || event.requestContext.requestId;
     }
+
+    // baseUrl = evnet.requestContext.path;
 
     Object.assign(this, {
       ip: event.requestContext.identity.sourceIp,
